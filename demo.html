@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Bar</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+  <link href="progressbar.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+  <div class="progressbar"></div>
+  <script src="progressbar.js"></script>
+  <script>
+    const element = document.querySelector('.progressbar')
+
+    const config = new ProgressBarConfig()
+    config.initText = 'loading...'
+    config.width = 350
+    config.height = 100
+    config.borderWidth = 5
+    config.borderColor = 'red'
+    config.padding = 10
+    config.radius = 20
+    config.progressColor = 'green'
+
+    const progressbar = new ProgressBar(element, config)
+
+    let timer = 0;
+    const intervalId = setInterval(() => {
+      timer += 5
+      progressbar.step(timer, {
+        text: `${timer}%`,
+        textColor: (timer > 50) ? 'white' : 'black'
+      })
+    }, 500);
+
+    setTimeout(() => {
+      clearInterval(intervalId)
+    }, 10500);
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+:root {
+  --default-width: 200px;
+  --default-height: 25px;
+  --default-border-width: 2px;
+  --default-border-color: #CECECE;
+  --default-padding: 2px;
+  --default-radius: 3px;
+  --default-progress-color: #516abd;
+}
+
+.progressbar {
+  position: relative;
+  width: var(--default-width);
+  height: var(--default-height);
+  border: var(--default-border-width) solid var(--default-border-color);
+  border-radius: var(--default-radius);
+}
+
+.progressbar.loader {
+  position: absolute;
+  border: none;
+  border-radius: 0;
+  width: 0%;
+  background-color: var(--default-progress-color);
+  transition: width 1s;
+  z-index: 100;
+}
+
+.progressbar.text {
+  border: none;
+  border-radius: 0;
+  position: absolute;
+  padding: var(--default-padding);
+  display: table;
+  width: 100%;
+  margin: auto;
+  top: 0;
+  text-align: center;
+  z-index: 200;
+}
+
+.fadein {
+  opacity: 1;
+  transition: all 1s;
+}
+
+.fadeout {
+  opacity: 0;
+}
