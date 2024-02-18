@@ -17,30 +17,35 @@
   <script>
     const element = document.querySelector('.progressbar')
 
-    const config = new ProgressBarConfig()
-    config.initText = 'loading...'
-    config.width = 350
-    config.height = 100
-    config.borderWidth = 5
-    config.borderColor = 'red'
-    config.padding = 10
-    config.radius = 20
-    config.progressColor = 'green'
-
-    const progressbar = new ProgressBar(element, config)
-
-    let timer = 0;
-    const intervalId = setInterval(() => {
-      timer += 5
-      progressbar.step(timer, {
-        text: `${timer}%`,
-        textColor: (timer > 50) ? 'white' : 'black'
+    // Catch any errors during runtime
+    try {
+      // Build progressbar with a supplied configuration-object
+      const progressbar = new ProgressBar(element, {
+        initText: 'loading...',
+        width: 350,
+        height: 100,
+        borderWidth: 5,
+        borderColor: 'black',
+        padding: 10,
+        progressColor: 'green'
       })
-    }, 500);
 
-    setTimeout(() => {
-      clearInterval(intervalId)
-    }, 10500);
+      // Add step at each 0.5 second to the progressbar
+      let timer = 0;
+      const intervalId = setInterval(() => {
+        timer += 5
+        progressbar.step(timer, {
+          text: `${timer}%`,
+          textColor: (timer > 50) ? 'white' : 'black'
+        })
+      }, 500);
+
+      setTimeout(() => {
+        clearInterval(intervalId)
+      }, 10500);
+    } catch (error) {
+      console.error(error)
+    }
   </script>
 </body>
 </html>
