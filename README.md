@@ -18,7 +18,7 @@ progressbar.step(5) // step indicated in percentage
 ```
 
 ### Configure the Progressbar
-The configuration could be either a plain object or an instance of `ProgressBarConfig`, but both are sent in as second parameter to the constructor.
+The configuration could be either a plain `object` or an instance of `ProgressBarConfig`, but both are sent in as second parameter to the constructor.
 
 ```javascript
 const config = ProgressBarConfig()
@@ -37,7 +37,7 @@ const progressbar = new ProgressBar(element, {
 ```
 
 ### Configure Steps
-The configuration could be either a plain object or an instance of `StepConfig`, but both are sent in as second parameter to the function.
+The configuration could be either a plain `object` or an instance of `StepConfig`, but both are sent in as second parameter to the function.
 
 ```javascript
 const progressbar = new ProgressBar(element)
