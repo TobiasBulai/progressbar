@@ -7,6 +7,8 @@ To enable the progressbar, we require a block element with the classname `progre
 </div>
 ```
 
+To fully enable this script and its features, you need the provided CSS file - or write your own with the default variables and classes for configuration.
+
 ### How to use
 ```javascript
 const element = document.querySelector('.progressbar')
@@ -46,7 +48,7 @@ progressbar.step(10, {})
 
 ### Configuration options
 **Progressbar**
-```javascript
+```json
 {
   initText: '', // String
   width: 0, // Number
@@ -61,7 +63,7 @@ progressbar.step(10, {})
 ```
 
 **Step**
-```javascript
+```json
 {
   text: { // object
     value: '', // String
