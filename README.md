@@ -48,7 +48,7 @@ progressbar.step(10, {})
 
 ### Configuration options
 **Progressbar**
-```json
+```jsonc
 {
   initText: '', // String
   width: 0, // Number
@@ -63,7 +63,7 @@ progressbar.step(10, {})
 ```
 
 **Step**
-```json
+```jsonc
 {
   text: { // object
     value: '', // String
