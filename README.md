@@ -20,6 +20,7 @@ The configuration could be either a plain object or an instance of `ProgressBarC
 
 ```javascript
 const config = ProgressBarConfig()
+config.initText = 'Loading...'
 
 // instance of ProgressBarConfig
 const progressbar = new ProgressBar(
@@ -28,17 +29,19 @@ const progressbar = new ProgressBar(
 )
 
 // Simple object
-const progressbar = new ProgressBar(element, {})
+const progressbar = new ProgressBar(element, {
+  initText: 'Loading...'
+})
 ```
 
 ### Configure Steps
 The configuration could be either a plain object or an instance of `StepConfig`, but both are sent in as second parameter to the function.
 
 ```javascript
-const config = new StepConfig()
 const progressbar = new ProgressBar(element)
 
-progressbar.step(5, config)
+progressbar.step(5, new StepConfig())
+progressbar.step(10, {})
 ```
 
 ### Configuration options
