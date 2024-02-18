@@ -42,7 +42,7 @@ const ProgressBar = class {
 
     this.element = element
 
-    this.text = document.createElement('div')
+    this.text = document.createElement('span')
     this.text.classList.add('progressbar', 'text')
     this.text.style.display = 'none'
     this.element.append(this.text)
