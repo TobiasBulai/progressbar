@@ -7,6 +7,7 @@ const ProgressBarConfig = class {
   padding = undefined
   radius = undefined
   progressColor = undefined
+  transitionDuration = undefined
 }
 
 const StepConfig = class {
@@ -34,7 +35,10 @@ const ProgressBar = class {
    */
   constructor(element, conf = {}) {
     this.validate(element, conf)
-    this.validateProgressBarConfiguration(conf)
+    this.validateConfiguration(
+      conf,
+      Object.getOwnPropertyNames(new ProgressBarConfig())
+    )
 
     this.element = element
 
@@ -53,19 +57,33 @@ const ProgressBar = class {
 
   /**
    *
+   * @param {HTMLElement} element
    * @param {ProgressBarConfig|object} conf
    */
-  validateProgressBarConfiguration (conf) {
-    const propertyList = Object.getOwnPropertyNames(new ProgressBarConfig())
+  validate (element, conf) {
+    if (element === undefined || typeof element !== 'object') {
+      throw new Error(`Missing element with class 'progressbar'!`)
+    }
+
+    if (conf === undefined || typeof conf !== 'object') {
+      throw new Error(`configuration is not an object!`)
+    }
+  }
+
+  /**
+   *
+   * @param {ProgressBarConfig|object} conf
+   */
+  validateConfiguration (conf, propertyList) {
     const suppliedConfigPropertyList = Object.getOwnPropertyNames(conf)
 
     suppliedConfigPropertyList.forEach(prop => {
-      const foundProperty = propertyList.filter((propName) => {
+      const foundProperty = propertyList.find((propName) => {
         return (propName === prop)
       })
 
       if (foundProperty === undefined) {
-        throw new Error(`Supplied property ${prop} is not supported!`)
+        throw new Error(`Supplied property '${prop}' is not supported!`)
       }
     })
   }
@@ -115,6 +133,54 @@ const ProgressBar = class {
           }
 
           break;
+        case 'transitionDuration':
+          if (typeof conf[prop] !== 'number') {
+            this.createError(prop)
+          } else {
+            const cssName = '--default-' + prop.replaceAll(/[A-Z]/g, (match) => {
+              return `-${match.toLowerCase()}`
+            })
+            this.element.style.setProperty(cssName, `${conf[prop]}s`)
+          }
+
+          break;
+        default:
+          throw new Error(`Supplied property '${prop}' of configuration does not exist!`)
+      }
+    })
+  }
+
+  /**
+   *
+   * @param {StepConfig|object} conf
+   */
+  configureStep (conf) {
+    const propertyList = Object.getOwnPropertyNames(conf)
+
+    propertyList.forEach(prop => {
+      switch (prop) {
+        case 'text':
+          if (typeof conf[prop] !== 'object') {
+            this.createError(prop)
+          } else {
+            if (conf[prop].fade !== undefined && typeof conf[prop].fade === 'boolean' && conf[prop].fade) {
+              this.fadeout(this.text)
+            }
+
+            if (conf[prop].value !== undefined && typeof conf[prop].value === 'string') {
+              this.text.style.display = 'table'
+              this.text.innerText = conf[prop].value
+            }
+
+            if (conf[prop].fade !== undefined && typeof conf[prop].fade === 'boolean' && conf[prop].fade) {
+              this.fadein(this.text)
+            }
+          }
+
+          break;
+        case 'textColor':
+          this.text.style.color = conf[prop]
+          break;
         default:
           throw new Error(`Supplied property '${prop}' of configuration does not exist!`)
       }
@@ -127,16 +193,16 @@ const ProgressBar = class {
    * @param {StepConfig|object} conf
    */
   step (stepPercentage, conf = {}) {
-    if (conf.text !== undefined) {
-      this.fadeout(this.text)
-      this.text.style.display = 'table'
-      this.text.innerText = conf.text
-      this.fadein(this.text)
+    if (typeof stepPercentage !== 'number') {
+      this.createError('stepPercentage')
     }
 
-    if (conf.textColor !== undefined) {
-      this.text.style.color = conf.textColor
-    }
+    this.validateConfiguration(
+      conf,
+      Object.getOwnPropertyNames(new StepConfig())
+    )
+
+    this.configureStep(conf)
 
     this.loader.style.width = `${stepPercentage}%`
   }
@@ -159,22 +225,7 @@ const ProgressBar = class {
     element.classList.add('fadein')
   }
 
-  /**
-   *
-   * @param {HTMLElement} element
-   * @param {ProgressBarConfig|object} conf
-   */
-  validate (element, conf) {
-    if (element === undefined || typeof element !== 'object') {
-      throw new Error(`Missing element with class 'progressbar'!`)
-    }
-
-    if (conf === undefined || typeof conf !== 'object') {
-      throw new Error(`configuration is not an object!`)
-    }
-  }
-
   createError (configuration) {
-    throw new Error(`'${configuration}' supplied a not valid value`)
+    throw new Error(`'${configuration}' supplied an invalid value`)
   }
 }

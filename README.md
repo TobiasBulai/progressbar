@@ -55,14 +55,18 @@ progressbar.step(10, {})
   borderColor: '', // String
   padding: 0, // Number
   radius: 0, // Number
-  progressColor: '' // String
+  progressColor: '', // String
+  transitionDuration: 0 // Number
 }
 ```
 
 **Step**
 ```javascript
 {
-  text: '', // String
+  text: { // object
+    value: '', // String
+    fade: false // Boolean
+  },
   textColor: '' // String
 }
 ```

@@ -6,6 +6,7 @@
   --default-padding: 2px;
   --default-radius: 3px;
   --default-progress-color: #516abd;
+  --default-transition-duration: 1s;
 }
 
 .progressbar {
@@ -22,7 +23,8 @@
   border-radius: 0;
   width: 0%;
   background-color: var(--default-progress-color);
-  transition: width 1s;
+  transition: width;
+  transition-duration: var(--default-transition-duration);
   z-index: 100;
 }
 
@@ -41,7 +43,8 @@
 
 .fadein {
   opacity: 1;
-  transition: all 1s;
+  transition: all;
+  transition-duration: var(--default-transition-duration);
 }
 
 .fadeout {

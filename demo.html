@@ -27,7 +27,8 @@
         borderWidth: 5,
         borderColor: 'black',
         padding: 10,
-        progressColor: 'green'
+        progressColor: 'green',
+        transitionDuration: 0.5
       })
 
       // Add step at each 0.5 second to the progressbar
@@ -35,7 +36,10 @@
       const intervalId = setInterval(() => {
         timer += 5
         progressbar.step(timer, {
-          text: `${timer}%`,
+          text: {
+            value: `${timer}%`,
+            fade: true
+          },
           textColor: (timer > 50) ? 'white' : 'black'
         })
       }, 500);
