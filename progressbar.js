@@ -111,10 +111,7 @@ const ProgressBar = class {
           if (typeof conf[prop] !== 'string') {
             this.createError(prop)
           } else {
-            const cssName = '--default-' + prop.replaceAll(/[A-Z]/g, (match) => {
-              return `-${match.toLowerCase()}`
-            })
-            this.element.style.setProperty(cssName, `${conf[prop]}`)
+            this.setDefaultCssValue(this.element, prop, conf[prop])
           }
 
           break;
@@ -126,10 +123,7 @@ const ProgressBar = class {
           if (typeof conf[prop] !== 'number') {
             this.createError(prop)
           } else {
-            const cssName = '--default-' + prop.replaceAll(/[A-Z]/g, (match) => {
-              return `-${match.toLowerCase()}`
-            })
-            this.element.style.setProperty(cssName, `${conf[prop]}px`)
+            this.setDefaultCssValue(this.element, prop, conf[prop], undefined, 'px')
           }
 
           break;
@@ -137,10 +131,7 @@ const ProgressBar = class {
           if (typeof conf[prop] !== 'number') {
             this.createError(prop)
           } else {
-            const cssName = '--default-' + prop.replaceAll(/[A-Z]/g, (match) => {
-              return `-${match.toLowerCase()}`
-            })
-            this.element.style.setProperty(cssName, `${conf[prop]}s`)
+            this.setDefaultCssValue(this.element, prop, conf[prop], undefined, 's')
           }
 
           break;
@@ -227,5 +218,21 @@ const ProgressBar = class {
 
   createError (configuration) {
     throw new Error(`'${configuration}' supplied an invalid value`)
+  }
+
+  /**
+   *
+   * @param {HTMLElement} element
+   * @param {string} prop
+   * @param {any} value
+   * @param {any|undefined} prefix
+   * @param {any|undefined} affix
+   * @returns
+   */
+  setDefaultCssValue (element, prop, value, prefix, affix) {
+    const cssName = '--default-' + prop.replaceAll(/[A-Z]/g, (match) => {
+      return `-${match.toLowerCase()}`
+    })
+    element.style.setProperty(cssName, `${(prefix === undefined) ? '' : prefix}${value}${(affix === undefined) ? '' : affix}`)
   }
 }
